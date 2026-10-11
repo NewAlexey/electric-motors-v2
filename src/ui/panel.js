@@ -8,8 +8,6 @@ function maxCoilsPerSlot(slots) {
 
 // Подписи опций шага по коллектору.
 function commPitchLabel(y) {
-  if (y === 1) return '1 · простая';
-  if (y === 2) return '2 · сложная';
   return String(y);
 }
 
@@ -28,6 +26,7 @@ export function bindPanel({ onReset }) {
   const distNums = document.getElementById('distNums');
   const distNumsVal = document.getElementById('distNumsVal');
   const btnReverse = document.getElementById('btnReverse');
+  const chkCurrent = document.getElementById('chkCurrent');
   const speedAnim = document.getElementById('speedAnim');
   const speedAnimVal = document.getElementById('speedAnimVal');
   const commPitch = document.getElementById('commPitch');
@@ -42,6 +41,7 @@ export function bindPanel({ onReset }) {
   chkNums.addEventListener('change', () => setState({ numsVisible: chkNums.checked }));
   distNums.addEventListener('input', () => setState({ numDist: Number(distNums.value) }));
   btnReverse.addEventListener('click', () => setState({ reversed: !getState().reversed }));
+  chkCurrent.addEventListener('change', () => setState({ currentColors: chkCurrent.checked }));
   speedAnim.addEventListener('input', () => setState({ speed: Number(speedAnim.value) }));
   commPitch.addEventListener('change', () => setState({ commPitch: Number(commPitch.value) }));
   slots.addEventListener('input', () => {
@@ -61,6 +61,7 @@ export function bindPanel({ onReset }) {
     chkNums.checked = s.numsVisible;
     distNums.value = s.numDist;
     distNumsVal.textContent = s.numDist;
+    chkCurrent.checked = s.currentColors;
     speedAnim.value = s.speed;
     speedAnimVal.textContent = s.speed;
     slots.value = s.slots;
