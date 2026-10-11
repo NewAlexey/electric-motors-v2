@@ -18,6 +18,7 @@ export function startLoop({ scene, camera, renderer, controls, armature, meshes 
       rot: armature.rotation.x,
       reversed: s.reversed,
       selectedCoil: s.selectedCoil,
+      commPitch: s.commPitch,
       ...meshes,
     });
 

@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-// Выбор объекта кликом. onPick получает индекс (userData.index) или null.
-export function createPicker({ domElement, camera, objects, onPick }) {
+// Выбор объекта кликом. getObjects() возвращает актуальный список мешей.
+// onPick получает индекс (userData.index) или null.
+export function createPicker({ domElement, camera, getObjects, onPick }) {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   let downX = 0;
@@ -21,7 +22,7 @@ export function createPicker({ domElement, camera, objects, onPick }) {
     pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
-    const hits = raycaster.intersectObjects(objects, false);
+    const hits = raycaster.intersectObjects(getObjects(), false);
     const idx = (hits.length && hits[0].object.userData.index !== undefined)
       ? hits[0].object.userData.index
       : null;

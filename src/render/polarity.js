@@ -3,12 +3,12 @@ import { SEG, SEG_GAP, SLOT_PHASE, COLORS } from '../config.js';
 // Раскраска по направлению тока: плоскость, проходящая через щётки,
 // делит обмотку на две половины с противоположным направлением тока.
 // При вращении секции проходят под щётками и меняют полярность (коммутация).
-export function paintPolarity({ rot, reversed, selectedCoil, segments, risers, coils }) {
+export function paintPolarity({ rot, reversed, selectedCoil, commPitch = 1, segments, risers, coils }) {
   // ламели/петушки, принадлежащие выбранной секции (её начало и конец)
   const selSegs = new Set();
   if (selectedCoil !== null) {
     selSegs.add(selectedCoil);
-    selSegs.add((selectedCoil + 1) % SEG);
+    selSegs.add((selectedCoil + commPitch) % SEG);
   }
 
   for (let i = 0; i < SEG; i++) {

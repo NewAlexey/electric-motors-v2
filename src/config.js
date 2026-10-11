@@ -27,13 +27,23 @@ export const RADII = {
   SLOT: 66,
 };
 
-// Число пазов = числу ламелей (1:1)
-export const SEG = 16;
-export const TEETH = SEG;
-export const SECTOR = (Math.PI * 2) / TEETH;
-export const TIP_FRAC = 0.5; // доля сектора под зуб
-export const SLOT_PHASE = 0.5 + TIP_FRAC / 2; // центр паза внутри сектора
-export const SEG_GAP = (Math.PI * 2) / SEG;
+// Число пазов и число ламелей = пазы × секции_на_паз.
+// Значения «живые» (export let): детали читают их при сборке, поэтому при
+// изменении параметров в UI якорь пересобирается из main.js.
+export let TEETH = 16; // число пазов (зубцов), всегда чётное
+export let SEG = 16; // число ламелей = TEETH × WINDING.u
+export let SECTOR = (Math.PI * 2) / TEETH;
+export let TIP_FRAC = 0.5; // доля сектора под зуб (остальное — паз)
+export let SLOT_PHASE = 0.5 + TIP_FRAC / 2; // центр паза внутри сектора
+export let SEG_GAP = (Math.PI * 2) / SEG;
+
+// Допустимые пределы настройки обмотки (SEG = пазы × секции на паз ∈ [6, 48]).
+export const WINDING_LIMITS = {
+  slots: { min: 6, max: 24, step: 2 },
+  coilsPerSlot: { min: 1, max: 4, step: 1 },
+  minSeg: 6,
+  maxSeg: 48,
+};
 
 // Петушки (выступы коллектора для пайки обмотки)
 export const RISER = {
@@ -44,12 +54,64 @@ export const RISER = {
 
 // Обмотка: двухслойная петлевая, 2p = 2
 export const WINDING = {
-  Z: SEG,
-  y1: SEG / 2, // полный шаг по пазам
+  Z: TEETH, // число пазов
+  y1: TEETH / 2, // полный шаг по пазам
+  u: 1, // секций (проводников) в пазу
   rTop: 84,
   rBot: 74,
   tubeR: 1.6,
 };
+
+// Секциям на паз нужно больше места, поэтому зуб пропорционально уже.
+function toothFraction(coilsPerSlot) {
+  return Math.max(0.3, 0.5 - (coilsPerSlot - 1) * 0.07);
+}
+
+export function validateWindingParams(slots, coilsPerSlot) {
+  return Number.isInteger(slots) && Number.isInteger(coilsPerSlot)
+    && slots >= WINDING_LIMITS.slots.min && slots % 2 === 0
+    && coilsPerSlot >= WINDING_LIMITS.coilsPerSlot.min
+    && slots * coilsPerSlot >= WINDING_LIMITS.minSeg
+    && slots * coilsPerSlot <= WINDING_LIMITS.maxSeg;
+}
+
+// Применяет число пазов и секций на паз, обновляя производные константы.
+// Возвращает SEG (число ламелей) или null, если параметры некорректны.
+export function setWindingParams(slots, coilsPerSlot) {
+  if (!validateWindingParams(slots, coilsPerSlot)) return null;
+  TEETH = slots;
+  SECTOR = (Math.PI * 2) / TEETH;
+  TIP_FRAC = toothFraction(coilsPerSlot);
+  SLOT_PHASE = 0.5 + TIP_FRAC / 2;
+  SEG = TEETH * coilsPerSlot;
+  SEG_GAP = (Math.PI * 2) / SEG;
+  RISER.TAN = SEG_GAP * RADII.COMM * 0.55;
+  WINDING.Z = TEETH;
+  WINDING.y1 = TEETH / 2;
+  WINDING.u = coilsPerSlot;
+  return SEG;
+}
+
+function gcd(a, b) {
+  while (b) {
+    const t = b;
+    b = a % b;
+    a = t;
+  }
+  return a;
+}
+
+// Шаг по коллектору yK даёт один замкнутый контур обмотки только если
+// он взаимно прост с числом ламелей: gcd(yK, SEG) = 1.
+export function isValidCommPitch(yK, seg = SEG) {
+  return Number.isInteger(yK) && yK >= 1 && yK < seg && gcd(yK, seg) === 1;
+}
+
+export function validCommPitches(seg = SEG) {
+  const list = [];
+  for (let y = 1; y < seg; y++) if (gcd(y, seg) === 1) list.push(y);
+  return list;
+}
 
 // Углы щёток (неподвижны относительно рамы)
 export const BRUSH_ANGLE = {
