@@ -1,0 +1,20 @@
+{
+  "name": "electric-motors-v2",
+  "version": "1.0.0",
+  "description": "Интерактивная 3D-модель якоря электрического двигателя",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
+}
