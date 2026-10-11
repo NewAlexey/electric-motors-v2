@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Электрический двигатель — якорь (3D)</title>
+<style>html,body{color:#e6e9ef;background:#14161c;height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;overflow:hidden}#app{position:fixed;inset:0}canvas{display:block}.hud{text-align:center;pointer-events:none;-webkit-user-select:none;user-select:none;position:fixed;top:18px;left:50%;transform:translate(-50%)}.hud h1{letter-spacing:.4px;color:#cfd6e4;margin:0 0 4px;font-size:18px;font-weight:500}.hud p{color:#7f879a;margin:0;font-size:13px}.controls{flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;display:flex;position:fixed;bottom:22px;left:50%;transform:translate(-50%)}.settings{z-index:10;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);background:#12141ab8;border:1px solid #2a3040;border-radius:12px;flex-direction:column;align-items:stretch;gap:10px;padding:14px;display:flex;position:fixed;top:18px;right:18px}.settings-title{letter-spacing:.5px;text-transform:uppercase;color:#7f879a;margin-bottom:2px;font-size:12px}.settings button{white-space:normal;width:100%;line-height:1.25}.section-title{letter-spacing:.3px;color:#cfd6e4;border-top:1px solid #262c3a;margin-top:6px;padding-top:10px;font-size:15px;font-weight:600}.range{color:#9aa3b5;justify-content:space-between;align-items:center;gap:10px;font-size:13px;display:inline-flex}.checkbox{color:#9aa3b5;cursor:pointer;align-items:center;gap:8px;font-size:13px;display:inline-flex}.checkbox input{accent-color:#35e070;width:15px;height:15px}input[type=range]{width:130px}#distNumsVal{text-align:right;color:#dfe4ee;min-width:24px}button{color:#dfe4ee;cursor:pointer;background:#232733;border:1px solid #333949;border-radius:9px;padding:9px 16px;font-size:13px;transition:background .15s,border-color .15s}button:hover{background:#2c3342;border-color:#46506a}.legend{color:#9aa3b5;flex-direction:column;gap:8px;font-size:13px;display:flex;position:fixed;bottom:22px;left:18px}.legend span{align-items:center;gap:8px;display:inline-flex}.dot{border-radius:3px;width:12px;height:12px;display:inline-block}</style>
+  <script type="module" crossorigin src="./assets/index-TMMGnB7r.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<div class="hud">
+  <h1>Электрический двигатель — якорь</h1>
+  <p>Зажмите левую кнопку мыши, чтобы вращать · колесо — приблизить · правая кнопка — сдвинуть</p>
+  <p>Кликните по проводу, чтобы выделить его и проследить путь обмотки</p>
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:#c9ced8"></i>Вал</span>
+  <span><i class="dot" style="background:#8b93a3"></i>Якорь</span>
+  <span><i class="dot" style="background:#d98b3a"></i>Коллектор</span>
+</div>
+
+<div class="controls">
+  <button id="btnRotate">▶ Запустить анимацию</button>
+  <button id="btnReset">Сбросить вид</button>
+</div>
+
+<div class="settings">
+  <div class="settings-title">Настройки якоря</div>
+
+  <div class="section-title">Коллектор</div>
+  <label class="checkbox">
+    <input id="chkNums" type="checkbox" checked>
+    Номера ламелей
+  </label>
+  <label class="range">Расстояние цифр
+    <input id="distNums" type="range" min="10" max="120" step="2" value="32">
+    <span id="distNumsVal">32</span>
+  </label>
+
+  <div class="section-title">Прочее</div>
+  <button id="btnReverse">Изменить направление вращения</button>
+</div>
+
+</body>
+</html>
