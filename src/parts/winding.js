@@ -22,11 +22,11 @@ export function buildWinding(parent) {
     const thS2 = slotAngle(S2);
 
     // Своя «ячейка» (радиус × осевой вынос) каждой секции:
-    // лобовые части ложатся вложенными оболочками и не пересекаются.
+    // задние концы обвивают вал за торцом якоря; передние — вложенные оболочки.
     const g = c % 4;
     const k = Math.floor(c / 4);
-    const rBackC = 96 + g * 8; // 96…120 — оболочка сзади
-    const xBackC = AXIS.CORE_X1 - 28 - k * 8; // -278…-302 — вынос назад
+    const rWrap = 40 + g * 8; // 40…64 — кольцо вокруг вала (меньше радиуса якоря)
+    const xWrap = AXIS.CORE_X1 - 30 - k * 9; // -280…-307 — вынос назад
     const rFrontC = 62 + g * 7; // 62…83 — оболочка спереди
     const xFrontC = AXIS.CORE_X2 + 20 + k * 7; // 170…191 — вынос вперёд
 
@@ -38,18 +38,18 @@ export function buildWinding(parent) {
     // 2) верхний слой: спереди → назад
     pts.push(polar(thA, rTop, (AXIS.CORE_X1 + AXIS.CORE_X2) / 2));
     pts.push(polar(thA, rTop, AXIS.CORE_X1 + 6));
-    // 3) назад: короткий прямой выход и плавный отвод на свою оболочку
-    pts.push(polar(thA, rTop, xBackC + 22));
-    pts.push(polar(thA, (rTop + rBackC) / 2, xBackC + 6));
-    pts.push(polar(thA, rBackC, xBackC));
-    // 4) дуга сзади из паза A в паз B (180°) на своей оболочке
-    const nArc = 12;
+    // 3) назад: короткий выход за торец и плавный заворот внутрь, к валу
+    pts.push(polar(thA, rTop, xWrap + 24));
+    pts.push(polar(thA, (rTop + rWrap) / 2, xWrap + 12));
+    pts.push(polar(thA, rWrap, xWrap));
+    // 4) обвить вал: полукруг вокруг вала за торцом якоря (паз A → паз B)
+    const nArc = 16;
     for (let k2 = 1; k2 <= nArc; k2++) {
-      pts.push(polar(thA + (k2 / nArc) * Math.PI, rBackC, xBackC));
+      pts.push(polar(thA + (k2 / nArc) * Math.PI, rWrap, xWrap));
     }
-    // 5) завернуть обратно в нижний слой паза B
-    pts.push(polar(thB, (rTop + rBackC) / 2, xBackC + 6));
-    pts.push(polar(thB, rBot, xBackC + 22));
+    // 5) вывести обратно в нижний слой паза B
+    pts.push(polar(thB, (rBot + rWrap) / 2, xWrap + 12));
+    pts.push(polar(thB, rBot, xWrap + 24));
     pts.push(polar(thB, rBot, AXIS.CORE_X1 + 6));
     // 6) нижний слой: сзади → вперёд
     pts.push(polar(thB, rBot, (AXIS.CORE_X1 + AXIS.CORE_X2) / 2));

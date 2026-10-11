@@ -12,7 +12,7 @@ export function startLoop({ scene, camera, renderer, controls, armature, meshes 
     const s = getState();
 
     // собственное вращение якоря вокруг вала
-    if (s.spinning) armature.rotation.x += dt * 0.6 * (s.reversed ? -1 : 1);
+    if (s.spinning) armature.rotation.x += dt * s.speed * (s.reversed ? -1 : 1);
 
     paintPolarity({
       rot: armature.rotation.x,

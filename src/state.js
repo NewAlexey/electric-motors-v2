@@ -7,6 +7,7 @@ const state = {
   selectedCoil: null, // индекс выделенного провода (или null)
   numsVisible: true, // видимость номеров ламелей
   numDist: 32, // отступ цифры от поверхности ламели
+  speed: 0.6, // скорость вращения якоря (рад/с)
 };
 
 const listeners = new Set();
