@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { AXIS, COMM_LEN, COMM_CENTER, RADII, BRUSH_ANGLE, COLORS } from '../config.js';
+import { COMM_LEN, COMM_CENTER, RADII, BRUSH_ANGLE, COLORS } from '../config.js';
 import { polar } from '../lib/geometry.js';
 import { makeLabelSprite } from '../lib/label.js';
 
