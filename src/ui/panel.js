@@ -25,6 +25,7 @@ export function bindPanel({ onReset }) {
   const chkNums = document.getElementById('chkNums');
   const distNums = document.getElementById('distNums');
   const distNumsVal = document.getElementById('distNumsVal');
+  const distNumsRow = document.getElementById('distNumsRow');
   const btnReverse = document.getElementById('btnReverse');
   const chkCurrent = document.getElementById('chkCurrent');
   const speedAnim = document.getElementById('speedAnim');
@@ -61,6 +62,7 @@ export function bindPanel({ onReset }) {
     chkNums.checked = s.numsVisible;
     distNums.value = s.numDist;
     distNumsVal.textContent = s.numDist;
+    distNumsRow.style.display = s.numsVisible ? '' : 'none';
     chkCurrent.checked = s.currentColors;
     speedAnim.value = s.speed;
     speedAnimVal.textContent = s.speed;

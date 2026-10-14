@@ -9,13 +9,12 @@ function shortest(angle) {
 }
 
 // Реальная укладка обмотки (двухслойная петлевая, 2p = 2).
-// В каждом пазу u секций: c-я секция занимает верхний слой в пазу floor(c/u)
-// и нижний — в пазу (floor(c/u) + Z/2). Начало секции подключено к ламели c,
-// конец — к ламели (c + yK), где yK — шаг по коллектору (1 — простая петлевая,
-// 2 — сложная и т. д.). Сзади секция перекидывается через вал.
+// В пазу u катушек. Секция c занимает верхний слой в пазу floor(c/u) и нижний —
+// в пазу (floor(c/u) + Z/2). Начало секции подключено к ламели c, конец — к
+// ламели (c + yK), где yK — шаг по коллектору (1 — простая петлевая, 2 — сложная
+// и т. д.). Сзади секция перекидывается через вал.
 //
-// Обмотка пересобирается при смене шага, поэтому экспортируется фабрика:
-// возвращает стабильный массив проводов и метод setPitch(yK).
+// Фабрика: возвращает стабильный массив проводов и метод setPitch(yK).
 export function createWinding(parent, initialPitch = 1) {
   const coils = [];
 
@@ -33,7 +32,7 @@ export function createWinding(parent, initialPitch = 1) {
     const { Z, y1, u, rTop, rBot, tubeR } = WINDING;
     const C = Z * u; // число секций = число ламелей
     const xRiser = AXIS.COMM_X1 - RISER.LEN / 2 + 6;
-    const nRad = Math.max(1, Math.round(Math.sqrt(C))); // ярусов укладки
+    const nRad = Math.max(1, Math.round(Math.sqrt(C))); // ярусов укладки лобовых
     const step = SECTOR * 0.16; // угловой шаг проводников внутри паза
 
     const slotCenter = (s) => s * SECTOR + SECTOR * SLOT_PHASE;

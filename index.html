@@ -57,6 +57,8 @@
     flex-direction: column;
     gap: 10px;
     align-items: stretch;
+    width: 320px;
+    box-sizing: border-box;
     background: rgba(18, 20, 26, 0.72);
     border: 1px solid #2a3040;
     border-radius: 12px;
@@ -84,7 +86,55 @@
     font-weight: 600;
     letter-spacing: 0.3px;
     color: #cfd6e4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
+
+  .hint {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #46506a;
+    border-radius: 50%;
+    background: #232733;
+    color: #9aa3b5;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+    cursor: help;
+    user-select: none;
+  }
+  .hint:hover, .hint:focus {
+    background: #2c3342;
+    color: #dfe4ee;
+    outline: none;
+  }
+  .hint-pop {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 300px;
+    padding: 12px;
+    background: #14161c;
+    border: 1px solid #333949;
+    border-radius: 10px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .5);
+    color: #b6bece;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: normal;
+    text-align: left;
+    cursor: default;
+  }
+  .hint:hover .hint-pop, .hint:focus .hint-pop { display: block; }
+  .hint-pop b { color: #e6e9ef; font-weight: 600; }
   
   .range {
     display: inline-flex;
@@ -172,24 +222,29 @@
     <input id="chkNums" type="checkbox" checked>
     Номера ламелей
   </label>
-  <label class="range">Расстояние цифр
+  <label class="range" id="distNumsRow">Расстояние цифр
     <input id="distNums" type="range" min="10" max="120" step="2" value="32">
     <span id="distNumsVal">32</span>
   </label>
 
-  <div class="section-title">Обмотка</div>
-  <label class="range">Число пазов Z
+  <div class="section-title">Обмотка<span class="hint" tabindex="0" aria-label="Пояснение к параметрам обмотки">?<span class="hint-pop">
+    <b>Значения.</b> Z — число пазов (чётное); u — секций (катушек) на паз; yк — шаг по коллектору.<br><br>
+    <b>Отношения.</b> SEG = Z·u — число ламелей и число секций обмотки; y1 = Z/2 — полный шаг по пазам (двуслойная петлевая обмотка, 2p = 2).<br><br>
+    <b>Формулы.</b> секция c занимает верхний слой в пазу ⌊c/u⌋ и нижний — в пазу (⌊c/u⌋ + Z/2) mod Z; её конец идёт на ламель (c + yк) mod SEG.<br><br>
+    <b>Условие.</b> Один замкнутый контур обмотки — при gcd(yк, SEG) = 1. Диапазоны: SEG ∈ [6, 48]; 1 ≤ yк &lt; SEG; u ∈ [1, 4].
+  </span></span></div>
+  <label class="range">Число пазов, Z
     <input id="slots" type="range" min="6" max="24" step="2" value="16">
     <span id="slotsVal">16</span>
   </label>
-  <label class="range">Секций на паз u
+  <label class="range">Секций на паз, u
     <input id="coilsPerSlot" type="range" min="1" max="4" step="1" value="1">
     <span id="coilsPerSlotVal">1</span>
   </label>
-  <div class="range">Число ламелей
+  <div class="range">Число ламелей, SEG
     <span id="segCount">16</span>
   </div>
-  <label class="range">Шаг по коллектору yк
+  <label class="range">Шаг по коллектору, yк
     <select id="commPitch">
       <option value="1">1</option>
     </select>

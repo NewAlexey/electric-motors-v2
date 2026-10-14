@@ -110,7 +110,7 @@ let lastPitch = getState().commPitch;
 let lastSlots = getState().slots;
 let lastU = getState().coilsPerSlot;
 subscribe((s) => {
-  brushes.apply(s.reversed);
+  brushes.apply(s.reversed, s.currentColors);
 
   if (s.slots !== lastSlots || s.coilsPerSlot !== lastU) {
     lastSlots = s.slots;

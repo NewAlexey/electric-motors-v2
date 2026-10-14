@@ -56,7 +56,7 @@ export const RISER = {
 export const WINDING = {
   Z: TEETH, // число пазов
   y1: TEETH / 2, // полный шаг по пазам
-  u: 1, // секций (проводников) в пазу
+  u: 1, // секций (катушек) в пазу
   rTop: 84,
   rBot: 74,
   tubeR: 1.6,
@@ -127,5 +127,6 @@ export const COLORS = {
   DARK: 0x2a2e39,
   PLUS: 0xe2392f, // красный «+»
   MINUS: 0x2f7de2, // синий «−»
+  GRAPHITE: 0x3a3f47, // графит — щётки при отключённой раскраске тока
   SELECT: 0x35e070, // зелёный — выделенный провод
 };

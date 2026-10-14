@@ -4,7 +4,8 @@ import { SEG, SEG_GAP, SLOT_PHASE, COLORS } from '../config.js';
 // делит обмотку на две половины с противоположным направлением тока.
 // При вращении секции проходят под щётками и меняют полярность (коммутация).
 export function paintPolarity({
-  rot, reversed, selectedCoil, commPitch = 1, currentColors = true, segments, risers, coils,
+  rot, reversed, selectedCoil, commPitch = 1, currentColors = true,
+  segments, risers, coils,
 }) {
   // ламели/петушки, принадлежащие выбранной секции (её начало и конец)
   const selSegs = new Set();
@@ -35,15 +36,18 @@ export function paintPolarity({
 
     // секция i (её концы — на ламелях i и i+1)
     const coil = coils[i];
-    if (i === selectedCoil) {
-      // выделенный провод — свой цвет и усиленное свечение
-      coil.material.color.setHex(COLORS.SELECT);
-      coil.material.emissive.setHex(COLORS.SELECT);
-      coil.material.emissiveIntensity = 1.8;
-    } else {
-      coil.material.color.setHex(colSeg);
-      coil.material.emissive.setHex(colSeg);
-      coil.material.emissiveIntensity = currentColors ? 0.16 : 0.05;
+    const isSel = i === selectedCoil;
+    if (coil) {
+      if (isSel) {
+        // выделенный провод — свой цвет и усиленное свечение
+        coil.material.color.setHex(COLORS.SELECT);
+        coil.material.emissive.setHex(COLORS.SELECT);
+        coil.material.emissiveIntensity = 1.8;
+      } else {
+        coil.material.color.setHex(colSeg);
+        coil.material.emissive.setHex(colSeg);
+        coil.material.emissiveIntensity = currentColors ? 0.16 : 0.05;
+      }
     }
   }
 }

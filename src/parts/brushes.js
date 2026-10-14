@@ -29,7 +29,8 @@ function makeBrush(parent, theta) {
   grp.position.copy(polar(theta, RADII.COMM + 15, COMM_CENTER));
   parent.add(grp);
 
-  // Обе подписи сразу; нужную показываем при раскраске.
+  // Обе подписи сразу; нужную показываем при раскраске. Цвет подписей всегда
+  // красно-синий и не зависит от раскраски щёток.
   const plusLbl = makeLabelSprite('+', hex(COLORS.PLUS));
   const minusLbl = makeLabelSprite('−', hex(COLORS.MINUS));
   for (const s of [plusLbl, minusLbl]) {
@@ -40,8 +41,8 @@ function makeBrush(parent, theta) {
   return { bodyMat, padMat, plusLbl, minusLbl };
 }
 
-function setPolarity(item, positive) {
-  const colorHex = positive ? COLORS.PLUS : COLORS.MINUS;
+function setPolarity(item, positive, colored) {
+  const colorHex = colored ? (positive ? COLORS.PLUS : COLORS.MINUS) : COLORS.GRAPHITE;
   item.bodyMat.emissive.setHex(colorHex);
   item.padMat.color.setHex(colorHex);
   item.padMat.emissive.setHex(colorHex);
@@ -49,16 +50,17 @@ function setPolarity(item, positive) {
   item.minusLbl.visible = !positive;
 }
 
-// Создаёт обе щётки. apply(reversed) меняет полюса местами.
+// Создаёт обе щётки. apply(reversed, colored) меняет полюса местами и
+// включает/выключает красно-синюю раскраску (серая при colored = false).
 export function createBrushes(parent) {
   const top = makeBrush(parent, BRUSH_ANGLE.PLUS);
   const bottom = makeBrush(parent, BRUSH_ANGLE.MINUS);
 
-  function apply(reversed) {
-    setPolarity(top, !reversed);
-    setPolarity(bottom, reversed);
+  function apply(reversed, colored = true) {
+    setPolarity(top, !reversed, colored);
+    setPolarity(bottom, reversed, colored);
   }
 
-  apply(false);
+  apply(false, true);
   return { apply };
 }
