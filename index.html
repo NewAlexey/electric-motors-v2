@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Электрический двигатель — якорь (3D)</title>
-<style>html,body{color:#e6e9ef;background:#14161c;height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;overflow:hidden}#app{position:fixed;inset:0}canvas{display:block}.hud{text-align:center;pointer-events:none;-webkit-user-select:none;user-select:none;position:fixed;top:18px;left:50%;transform:translate(-50%)}.hud h1{letter-spacing:.4px;color:#cfd6e4;margin:0 0 4px;font-size:18px;font-weight:500}.hud p{color:#7f879a;margin:0;font-size:13px}.controls{flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;display:flex;position:fixed;bottom:22px;left:50%;transform:translate(-50%)}.settings{z-index:10;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);background:#12141ab8;border:1px solid #2a3040;border-radius:12px;flex-direction:column;align-items:stretch;gap:10px;padding:14px;display:flex;position:fixed;top:18px;right:18px}.settings-title{letter-spacing:.5px;text-transform:uppercase;color:#7f879a;margin-bottom:2px;font-size:12px}.settings button{white-space:normal;width:100%;line-height:1.25}.section-title{letter-spacing:.3px;color:#cfd6e4;border-top:1px solid #262c3a;margin-top:6px;padding-top:10px;font-size:15px;font-weight:600}.range{color:#9aa3b5;justify-content:space-between;align-items:center;gap:10px;font-size:13px;display:inline-flex}.checkbox{color:#9aa3b5;cursor:pointer;align-items:center;gap:8px;font-size:13px;display:inline-flex}.checkbox input{accent-color:#35e070;width:15px;height:15px}input[type=range]{width:130px}#distNumsVal{text-align:right;color:#dfe4ee;min-width:24px}button{color:#dfe4ee;cursor:pointer;background:#232733;border:1px solid #333949;border-radius:9px;padding:9px 16px;font-size:13px;transition:background .15s,border-color .15s}button:hover{background:#2c3342;border-color:#46506a}.legend{color:#9aa3b5;flex-direction:column;gap:8px;font-size:13px;display:flex;position:fixed;bottom:22px;left:18px}.legend span{align-items:center;gap:8px;display:inline-flex}.dot{border-radius:3px;width:12px;height:12px;display:inline-block}</style>
-  <script type="module" crossorigin src="./assets/index-TMMGnB7r.js"></script>
+<style>html,body{color:#e6e9ef;background:#14161c;height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;overflow:hidden}#app{position:fixed;inset:0}canvas{display:block}.hud{text-align:center;pointer-events:none;-webkit-user-select:none;user-select:none;position:fixed;top:18px;left:50%;transform:translate(-50%)}.hud h1{letter-spacing:.4px;color:#cfd6e4;margin:0 0 4px;font-size:18px;font-weight:500}.hud p{color:#7f879a;margin:0;font-size:13px}.controls{flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;display:flex;position:fixed;bottom:22px;left:50%;transform:translate(-50%)}.settings{box-sizing:border-box;z-index:10;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);background:#12141ab8;border:1px solid #2a3040;border-radius:12px;flex-direction:column;align-items:stretch;gap:10px;width:320px;padding:14px;display:flex;position:fixed;top:18px;right:18px}.settings-title{letter-spacing:.5px;text-transform:uppercase;color:#7f879a;margin-bottom:2px;font-size:12px}.settings button{white-space:normal;width:100%;line-height:1.25}.section-title{letter-spacing:.3px;color:#cfd6e4;border-top:1px solid #262c3a;align-items:center;gap:6px;margin-top:6px;padding-top:10px;font-size:15px;font-weight:600;display:flex}.hint{color:#9aa3b5;text-align:center;cursor:help;-webkit-user-select:none;user-select:none;background:#232733;border:1px solid #46506a;border-radius:50%;width:18px;height:18px;font-size:12px;font-weight:600;line-height:16px;display:inline-block;position:relative}.hint:hover,.hint:focus{color:#dfe4ee;background:#2c3342;outline:none}.hint-pop{z-index:30;color:#b6bece;letter-spacing:normal;text-align:left;cursor:default;background:#14161c;border:1px solid #333949;border-radius:10px;width:300px;padding:12px;font-family:Segoe UI,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.55;display:none;position:absolute;top:calc(100% + 8px);right:0;box-shadow:0 10px 26px #00000080}.hint:hover .hint-pop,.hint:focus .hint-pop{display:block}.hint-pop b{color:#e6e9ef;font-weight:600}.range{color:#9aa3b5;justify-content:space-between;align-items:center;gap:10px;font-size:13px;display:inline-flex}.checkbox{color:#9aa3b5;cursor:pointer;align-items:center;gap:8px;font-size:13px;display:inline-flex}.checkbox input{width:15px;height:15px}select{color:#dfe4ee;cursor:pointer;background:#232733;border:1px solid #333949;border-radius:7px;padding:5px 8px;font-size:13px}input[type=range]{width:130px}#distNumsVal,#speedAnimVal{text-align:right;color:#dfe4ee;min-width:24px}button{color:#dfe4ee;cursor:pointer;background:#232733;border:1px solid #333949;border-radius:9px;padding:9px 16px;font-size:13px;transition:background .15s,border-color .15s}button:hover{background:#2c3342;border-color:#46506a}.legend{color:#9aa3b5;flex-direction:column;gap:8px;font-size:13px;display:flex;position:fixed;bottom:22px;left:18px}.legend span{align-items:center;gap:8px;display:inline-flex}.dot{border-radius:3px;width:12px;height:12px;display:inline-block}</style>
+  <script type="module" crossorigin src="./assets/index-GAuEIPa0.js"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -24,6 +24,10 @@
 
 <div class="controls">
   <button id="btnRotate">▶ Запустить анимацию</button>
+  <label class="range">Скорость вращения
+    <input id="speedAnim" type="range" min="0.1" max="3" step="0.1" value="0.6">
+    <span id="speedAnimVal">0.6</span>
+  </label>
   <button id="btnReset">Сбросить вид</button>
 </div>
 
@@ -35,12 +39,39 @@
     <input id="chkNums" type="checkbox" checked>
     Номера ламелей
   </label>
-  <label class="range">Расстояние цифр
+  <label class="range" id="distNumsRow">Расстояние цифр
     <input id="distNums" type="range" min="10" max="120" step="2" value="32">
     <span id="distNumsVal">32</span>
   </label>
 
+  <div class="section-title">Обмотка<span class="hint" tabindex="0" aria-label="Пояснение к параметрам обмотки">?<span class="hint-pop">
+    <b>Значения.</b> Z — число пазов (чётное); u — секций (катушек) на паз; yк — шаг по коллектору.<br><br>
+    <b>Отношения.</b> SEG = Z·u — число ламелей и число секций обмотки; y1 = Z/2 — полный шаг по пазам (двуслойная петлевая обмотка, 2p = 2).<br><br>
+    <b>Формулы.</b> секция c занимает верхний слой в пазу ⌊c/u⌋ и нижний — в пазу (⌊c/u⌋ + Z/2) mod Z; её конец идёт на ламель (c + yк) mod SEG.<br><br>
+    <b>Условие.</b> Один замкнутый контур обмотки — при gcd(yк, SEG) = 1. Диапазоны: SEG ∈ [6, 48]; 1 ≤ yк &lt; SEG; u ∈ [1, 4].
+  </span></span></div>
+  <label class="range">Число пазов, Z
+    <input id="slots" type="range" min="6" max="24" step="2" value="16">
+    <span id="slotsVal">16</span>
+  </label>
+  <label class="range">Секций на паз, u
+    <input id="coilsPerSlot" type="range" min="1" max="4" step="1" value="1">
+    <span id="coilsPerSlotVal">1</span>
+  </label>
+  <div class="range">Число ламелей, SEG
+    <span id="segCount">16</span>
+  </div>
+  <label class="range">Шаг по коллектору, yк
+    <select id="commPitch">
+      <option value="1">1</option>
+    </select>
+  </label>
+
   <div class="section-title">Прочее</div>
+  <label class="checkbox">
+    <input id="chkCurrent" type="checkbox">
+    Направление тока
+  </label>
   <button id="btnReverse">Изменить направление вращения</button>
 </div>
 
