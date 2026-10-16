@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { AXIS, RADII, SECTOR, SLOT_PHASE, SEG_GAP, RISER, WINDING, COLORS } from '../config.js';
 import { polar } from '../lib/geometry.js';
 
+// Предустановленный медный цвет (линейное пространство — как material.color).
+const COPPER = new THREE.Color(COLORS.COPPER);
+
 // Приводит угол к диапазону (−π, π] — кратчайший поворот между двумя пазами.
 function shortest(angle) {
   const twoPi = Math.PI * 2;
@@ -92,10 +95,33 @@ export function createWinding(parent, initialPitch = 1) {
       pts.push(polar(thS2, RADII.COMM + 2, xRiser));
 
       const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
+      const geometry = new THREE.TubeGeometry(curve, 240, tubeR, 8, false);
+
+      // Для раскраски по направлению тока каждой вершине запоминаем её угловую
+      // позицию (cos φ, sin φ, где φ = atan2(y, z)) и заводим атрибут цвета.
+      const pos = geometry.getAttribute('position');
+      const count = pos.count;
+      const cosA = new Float32Array(count);
+      const sinA = new Float32Array(count);
+      const colors = new Float32Array(count * 3);
+      for (let v = 0; v < count; v++) {
+        const y = pos.getY(v);
+        const z = pos.getZ(v);
+        const r = Math.hypot(y, z) || 1;
+        cosA[v] = z / r;
+        sinA[v] = y / r;
+        colors[v * 3] = COPPER.r;
+        colors[v * 3 + 1] = COPPER.g;
+        colors[v * 3 + 2] = COPPER.b;
+      }
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
       const mat = new THREE.MeshStandardMaterial({
-        color: COLORS.COPPER, metalness: 1.0, roughness: 0.3, emissive: 0x000000,
+        vertexColors: true, metalness: 0.5, roughness: 0.4,
       });
-      const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 240, tubeR, 8, false), mat);
+      const tube = new THREE.Mesh(geometry, mat);
+      tube.userData.cos = cosA;
+      tube.userData.sin = sinA;
       tube.castShadow = true;
       tube.userData.index = c;
       parent.add(tube);
